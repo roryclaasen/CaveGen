@@ -22,16 +22,20 @@ public class Example {
 	private JPanel panel;
 	private CaveGenerator caveGen;
 
+	private int drawSize = 8;
+	private int cWidth = 100, cHeight = 100;
+
 	public Example() {
 		init();
 
 		CaveConfig config = new CaveConfig();
+		config.setDebugOutput(true);
 		String seed = JOptionPane.showInputDialog(frame, "Enter a seed or press cancel for a random seed");
 		try {
 			long seedL = Long.parseLong(seed);
-			caveGen = new CaveGenerator(100, 100, seedL);
+			caveGen = new CaveGenerator(cWidth, cHeight, seedL);
 		} catch (Exception e) {
-			caveGen = new CaveGenerator(100, 100);
+			caveGen = new CaveGenerator(cWidth, cHeight);
 		}
 		caveGen.generate(config);
 		panel.repaint();
@@ -40,19 +44,12 @@ public class Example {
 	@SuppressWarnings("serial")
 	private void init() {
 		frame = new JFrame();
-		frame.setMinimumSize(new Dimension(800, 600));
-		frame.pack();
-		// frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setTitle("Cave Gen Example");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel() {
 
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.clearRect(0, 0, this.getWidth(), this.getHeight());
-				int size = 8;
 				for (int x = 0; x < caveGen.getLevel().getWidth(); x++) {
 					for (int y = 0; y < caveGen.getLevel().getHeight(); y++) {
 						int id = caveGen.getLevel().getTile(x, y);
@@ -67,12 +64,20 @@ public class Example {
 								g.setColor(Color.DARK_GRAY);
 								break;
 						}
-						g.fillRect(x * size, y * size, size, size);
+						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
 					}
 				}
+				g.setColor(Color.BLACK);
+				g.drawString(caveGen.getSeed() + "", 5, 15);
 			}
 		};
+		panel.setPreferredSize(new Dimension(cWidth * drawSize, cHeight * drawSize));
 		frame.add(panel);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setTitle("Cave Gen Example");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void show() {

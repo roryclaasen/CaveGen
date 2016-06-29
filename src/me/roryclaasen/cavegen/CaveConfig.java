@@ -2,8 +2,10 @@ package me.roryclaasen.cavegen;
 
 public class CaveConfig {
 
+	private boolean debugOutput = false;
+
 	private int minRoomSize = 4, maxRoomSize = 15;
-	private int minRooms = 3, maxRooms = 7;
+	private int minRooms = 7, maxRooms = 20;
 	private int tunnelSize = 1;
 
 	public int getMinRoomSize() {
@@ -44,5 +46,13 @@ public class CaveConfig {
 
 	public void setTunnelSize(int tunnelSize) {
 		this.tunnelSize = tunnelSize;
+	}
+
+	public boolean doDebugOutput() {
+		return debugOutput;
+	}
+
+	public void setDebugOutput(boolean debugOutput) {
+		this.debugOutput = debugOutput;
 	}
 }

@@ -4,16 +4,17 @@ import java.util.Random;
 
 public class CaveGenerator {
 
-	private Random random;
+	private final Random random;
 
+	private long seed;
 	private CaveLevel level;
 
 	public CaveGenerator(int width, int height) {
-		random = new Random();
-		init(width, height);
+		this(width, height, new Random().nextLong());
 	}
 
 	public CaveGenerator(int width, int height, long seed) {
+		this.seed = seed;
 		random = new Random(seed);
 		init(width, height);
 	}
@@ -32,5 +33,9 @@ public class CaveGenerator {
 
 	public CaveLevel getLevel() {
 		return level;
+	}
+
+	public long getSeed() {
+		return seed;
 	}
 }

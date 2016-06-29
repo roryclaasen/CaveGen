@@ -29,14 +29,12 @@ public class CaveLevel {
 
 	protected void generate(CaveConfig config) {
 		this.config = config;
-
-		objects.clear();
 		placeRooms();
+		if (config.doDebugOutput()) System.out.println("Setting tiles");
 		for (CaveObject object : objects) {
 			int id = 0;
 			if (object instanceof CaveRoom) id = 1;
 			if (object instanceof CaveTunnel) id = 2;
-
 			for (int x = object.getX(); x < object.getX() + object.getWidth(); x++) {
 				if (x < 0 || x >= WIDTH) continue;
 				for (int y = object.getY(); y < object.getY() + object.getHeight(); y++) {
@@ -50,6 +48,7 @@ public class CaveLevel {
 	private void placeRooms() {
 		int numberOfRooms = config.getMinRooms() + RANDOM.nextInt(config.getMaxRooms() - config.getMinRooms());
 		List<CaveRoom> rooms = new ArrayList<CaveRoom>();
+		int added = 0, skipped = 0;
 		for (int i = 0; i < numberOfRooms; i++) {
 			int width = config.getMinRoomSize() + RANDOM.nextInt(config.getMaxRoomSize() - config.getMinRoomSize());
 			int height = config.getMinRoomSize() + RANDOM.nextInt(config.getMaxRoomSize() - config.getMinRoomSize());
@@ -70,11 +69,12 @@ public class CaveLevel {
 					}
 				}
 				rooms.add(room);
-				System.out.println("Adding room(" + i + ")!");
+				added++;
 			} else {
-				System.err.println("Skipping room(" + i + ")!");
+				skipped++;
 			}
 		}
+		if (config.doDebugOutput()) System.out.println("Added " + added + " room(s), Skipped " + skipped + " room(s)");
 		objects.addAll(rooms);
 	}
 
