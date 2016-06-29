@@ -21,9 +21,13 @@ public class CaveGenerator {
 	private void init(int width, int height) {
 		level = new CaveLevel(width, height, random);
 	}
-	
-	public void generate(){
-		level.generate();
+
+	public void generate() {
+		level.generate(new CaveConfig());
+	}
+
+	public void generate(CaveConfig config) {
+		level.generate(config);
 	}
 
 	public CaveLevel getLevel() {
