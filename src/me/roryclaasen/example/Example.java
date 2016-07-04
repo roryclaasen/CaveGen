@@ -62,15 +62,15 @@ public class Example {
 					for (int y = 0; y < caveGen.getLevel().getHeight(); y++) {
 						int id = caveGen.getLevel().getTile(x, y);
 						switch (id) {
-						case (1):
-							g.setColor(Color.PINK);
-							break;
-						case (2):
-							g.setColor(Color.GREEN);
-							break;
-						default:
-							g.setColor(Color.DARK_GRAY);
-							break;
+							case (1) :
+								g.setColor(Color.PINK);
+								break;
+							case (2) :
+								g.setColor(Color.GREEN);
+								break;
+							default :
+								g.setColor(Color.DARK_GRAY);
+								break;
 						}
 						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
 						if (drawGrid) {
