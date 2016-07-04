@@ -20,6 +20,7 @@ public class CaveLevel {
 	}
 
 	protected void generate(CaveConfig config) {
+		if (config.doDebugOutput()) System.out.println("Creating level with seed: " + this.SEED);
 		noise = new OpenSimplexNoise(this.SEED);
 		if (config.doDebugOutput()) System.out.println("Setting tiles");
 		for (int x = 0; x < WIDTH; x++) {
@@ -28,6 +29,7 @@ public class CaveLevel {
 				if (value > -config.getCaveRange() && value < config.getCaveRange()) tiles[x + y * WIDTH] = 1;
 			}
 		}
+		if (config.doDebugOutput()) System.out.println("Done!");
 	}
 
 	public int getWidth() {
