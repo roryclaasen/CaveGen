@@ -58,9 +58,9 @@ public class Example {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.clearRect(0, 0, this.getWidth(), this.getHeight());
-				for (int x = 0; x < caveGen.getLevel().getWidth(); x++) {
-					for (int y = 0; y < caveGen.getLevel().getHeight(); y++) {
-						int id = caveGen.getLevel().getTile(x, y);
+				for (int x = 0; x < caveGen.getWidth(); x++) {
+					for (int y = 0; y < caveGen.getHeight(); y++) {
+						int id = caveGen.getTile(x, y);
 						g.setColor(Color.DARK_GRAY);
 						if (id == 1) g.setColor(Color.PINK);
 						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
@@ -97,7 +97,7 @@ public class Example {
 			private void update(MouseEvent e) {
 				mX = e.getX() / drawSize;
 				mY = e.getY() / drawSize;
-				mID = caveGen.getLevel().getTile(mX, mY);
+				mID = caveGen.getTile(mX, mY);
 				panel.repaint();
 			}
 		});
