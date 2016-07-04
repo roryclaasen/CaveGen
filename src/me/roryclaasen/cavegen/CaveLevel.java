@@ -1,30 +1,33 @@
 package me.roryclaasen.cavegen;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import me.roryclaasen.cavegen.noise.OpenSimplexNoise;
 
 public class CaveLevel {
 
 	private final int WIDTH, HEIGHT;
-	private final Random RANDOM;
+	private final long SEED;
+
+	private OpenSimplexNoise noise;
 
 	private int[] tiles;
-	private CaveConfig config;
 
-	protected CaveLevel(int width, int height, Random random) {
+	protected CaveLevel(int width, int height, long seed) {
 		this.WIDTH = width;
 		this.HEIGHT = height;
-		this.RANDOM = random;
+		this.SEED = seed;
 
 		this.tiles = new int[WIDTH * HEIGHT];
 	}
 
 	protected void generate(CaveConfig config) {
-		this.config = config;
+		noise = new OpenSimplexNoise(this.SEED);
 		if (config.doDebugOutput()) System.out.println("Setting tiles");
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				double value = noise.eval(x / config.getFeatureSize(), y / config.getFeatureSize());
+				if (value > -config.getCaveRange() && value < config.getCaveRange()) tiles[x + y * WIDTH] = 1;
+			}
+		}
 	}
 
 	public int getWidth() {

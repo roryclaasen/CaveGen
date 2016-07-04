@@ -4,8 +4,6 @@ import java.util.Random;
 
 public class CaveGenerator {
 
-	private final Random random;
-
 	private long seed;
 	private CaveLevel level;
 
@@ -15,12 +13,11 @@ public class CaveGenerator {
 
 	public CaveGenerator(int width, int height, long seed) {
 		this.seed = seed;
-		random = new Random(seed);
 		init(width, height);
 	}
 
 	private void init(int width, int height) {
-		level = new CaveLevel(width, height, random);
+		level = new CaveLevel(width, height, seed);
 	}
 
 	public void generate() {
