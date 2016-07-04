@@ -26,7 +26,7 @@ public class Example {
 	private JPanel panel;
 	private CaveGenerator caveGen;
 
-	private int drawSize = 8;
+	private int drawSize = 6;
 	private int cWidth = 100, cHeight = 100;
 
 	private boolean drawGrid = false;

@@ -63,9 +63,13 @@ public class CaveLevel {
 					if (RANDOM.nextInt(2) == 1) {
 						addTunnelH(last.x, next.x, last.y);
 						addTunnelV(last.y, next.y, next.x);
+
+						objects.add(new CaveTunnel(next.x - ((config.getTunnelSize() + 1) / 2), last.y - ((config.getTunnelSize() + 1) / 2), config.getTunnelSize() + 2, config.getTunnelSize() + 2));
 					} else {
 						addTunnelV(last.y, next.y, last.x);
 						addTunnelH(last.x, next.x, next.y);
+
+						objects.add(new CaveTunnel(last.x - ((config.getTunnelSize() + 1) / 2), next.y - ((config.getTunnelSize() + 1) / 2), config.getTunnelSize() + 2, config.getTunnelSize() + 2));
 					}
 				}
 				rooms.add(room);
