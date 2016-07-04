@@ -3,6 +3,10 @@ package me.roryclaasen.example;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,6 +28,10 @@ public class Example {
 
 	private int drawSize = 8;
 	private int cWidth = 100, cHeight = 100;
+
+	private boolean drawGrid = false;
+
+	private int mID, mX, mY;
 
 	public Example() {
 		init();
@@ -54,23 +62,70 @@ public class Example {
 					for (int y = 0; y < caveGen.getLevel().getHeight(); y++) {
 						int id = caveGen.getLevel().getTile(x, y);
 						switch (id) {
-							case (1) :
-								g.setColor(Color.PINK);
-								break;
-							case (2) :
-								g.setColor(Color.GREEN);
-								break;
-							default :
-								g.setColor(Color.DARK_GRAY);
-								break;
+						case (1):
+							g.setColor(Color.PINK);
+							break;
+						case (2):
+							g.setColor(Color.GREEN);
+							break;
+						default:
+							g.setColor(Color.DARK_GRAY);
+							break;
 						}
 						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
+						if (drawGrid) {
+							g.setColor(Color.BLACK);
+							g.drawLine(0, y * drawSize, getHeight(), y * drawSize);
+						}
+					}
+					if (drawGrid) {
+						g.drawLine(x * drawSize, 0, x * drawSize, getWidth());
+						g.setColor(Color.BLACK);
 					}
 				}
-				g.setColor(Color.BLACK);
+				g.setColor(Color.WHITE);
 				g.drawString(caveGen.getSeed() + "", 5, 15);
+
+				g.drawString(mID + " (" + mX + "," + mY + ")", mX * drawSize, mY * drawSize);
+				g.setColor(new Color(255, 255, 255, 150));
+				g.fillRect(mX * drawSize, mY * drawSize, drawSize, drawSize);
 			}
 		};
+		panel.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				update(e);
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				update(e);
+			}
+
+			private void update(MouseEvent e) {
+				mX = e.getX() / drawSize;
+				mY = e.getY() / drawSize;
+				mID = caveGen.getLevel().getTile(mX, mY);
+				panel.repaint();
+			}
+		});
+		frame.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_G) drawGrid = !drawGrid;
+				panel.repaint();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_G) drawGrid = !drawGrid;
+			}
+		});
 		panel.setPreferredSize(new Dimension(cWidth * drawSize, cHeight * drawSize));
 		frame.add(panel);
 		frame.setResizable(false);
@@ -82,5 +137,6 @@ public class Example {
 
 	public void show() {
 		frame.setVisible(true);
+		panel.requestFocus();
 	}
 }
