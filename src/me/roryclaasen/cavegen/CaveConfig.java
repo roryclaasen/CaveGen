@@ -6,8 +6,8 @@ public class CaveConfig {
 
 	private double caveRange = 0.2;
 	private double featureSize = 24.0;
-	private int cavenSize = 15;
-	private int cavernLoop = (cavenSize / 3) + 2;
+	private int cavernSize = 15;
+	private int cavernLoop = (cavernSize / 3) + 2;
 
 	public double getCaveRange() {
 		return caveRange;
@@ -26,11 +26,11 @@ public class CaveConfig {
 	}
 
 	public int getCavenSize() {
-		return cavenSize;
+		return cavernSize;
 	}
 
 	public void setCavenSize(int cavenSize) {
-		this.cavenSize = cavenSize;
+		this.cavernSize = cavenSize;
 	}
 
 	public int getCavernLoop() {
