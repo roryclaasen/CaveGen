@@ -77,9 +77,13 @@ public class CaveGenerator {
 	}
 
 	public int getTile(int x, int y) {
-		if (x < 0 || x >= WIDTH) throw new IndexOutOfBoundsException("Index " + x + " is out of bounds!");
-		if (y < 0 || y >= HEIGHT) throw new IndexOutOfBoundsException("Index " + y + " is out of bounds!");
+		if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) throw new IndexOutOfBoundsException("Coords " + x + ", " + y + " is out of bounds!");
 		return tiles[x + y * WIDTH];
+	}
+
+	public int getTile(int i) {
+		if (i < 0 || i >= HEIGHT * WIDTH) throw new IndexOutOfBoundsException("Index " + i + " is out of bounds!");
+		return tiles[i];
 	}
 
 	public long getSeed() {

@@ -60,14 +60,19 @@ public class Example {
 				g.clearRect(0, 0, this.getWidth(), this.getHeight());
 				for (int x = 0; x < caveGen.getWidth(); x++) {
 					for (int y = 0; y < caveGen.getHeight(); y++) {
-						int id = caveGen.getTile(x, y);
-						g.setColor(Color.DARK_GRAY);
-						if (id == 1) g.setColor(Color.PINK);
-						if (id == 2) g.setColor(Color.GREEN); // id 2 is being used when testing a new tile
-						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
-						if (drawGrid) {
-							g.setColor(Color.BLACK);
-							g.drawLine(0, y * drawSize, getHeight(), y * drawSize);
+						try {
+							int id = caveGen.getTile(x, y);
+							g.setColor(Color.DARK_GRAY);
+							if (id == 1) g.setColor(Color.PINK);
+							if (id == 2) g.setColor(Color.GREEN); // id 2 is being used when testing a new tile
+							g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
+							if (drawGrid) {
+								g.setColor(Color.BLACK);
+								g.drawLine(0, y * drawSize, getHeight(), y * drawSize);
+							}
+						} catch (Exception e) {
+							// e.printStackTrace();
+							System.out.println(e.getLocalizedMessage());
 						}
 					}
 					if (drawGrid) {
@@ -111,7 +116,8 @@ public class Example {
 			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {
+			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
