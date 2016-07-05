@@ -63,6 +63,7 @@ public class Example {
 						int id = caveGen.getTile(x, y);
 						g.setColor(Color.DARK_GRAY);
 						if (id == 1) g.setColor(Color.PINK);
+						if (id == 2) g.setColor(Color.GREEN); // id 2 is being used when testing a new tile
 						g.fillRect(x * drawSize, y * drawSize, drawSize, drawSize);
 						if (drawGrid) {
 							g.setColor(Color.BLACK);

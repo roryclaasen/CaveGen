@@ -40,28 +40,30 @@ public class CaveGenerator {
 				if (value > -config.getCaveRange() && value < config.getCaveRange()) tiles[x + y * WIDTH] = 1;
 			}
 		}
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			boolean valid = false;
-			int x = 0, y = 0, size = 15;
+			int x = 0, y = 0, size = 18;
 			while (!valid) {
 				x = random.nextInt(WIDTH);
 				y = random.nextInt(HEIGHT);
 				valid = tiles[x + y * WIDTH] == 1;
 			}
-			placeCave(x, y, size + random.nextInt(size));
+			// for (int l = 0; l < 3; l++) {
+			// placeCave(x - (size / 2) + random.nextInt(size), y - (size / 2) + random.nextInt(size), size / (1 + random.nextInt(3)) + random.nextInt(size));
+			// }
+			placeCave(x, y, (int) Math.ceil((size * 0.75) + random.nextInt(size)));
 		}
 		if (config.doDebugOutput()) System.out.println("Done!");
 	}
 
 	private void placeCave(int sx, int sy, int size) {
 		for (int x = sx - (size / 2); x < sx + (size / 2); x++) {
-			if (x < 0 && x >= WIDTH) continue;
+			if (x < 0 || x >= WIDTH) continue;
 			for (int y = sy - (size / 2); y < sy + (size / 2); y++) {
-				if (y < 0 && y >= HEIGHT) continue;
-				if (x + y * WIDTH > tiles.length) continue;
+				if (y < 0 || y >= HEIGHT) continue;
 				int xl = Math.abs(sx - x);
 				int yl = Math.abs(sy - y);
-				if (Math.floor(Math.sqrt((xl * xl) + (yl * xl))) <= size) tiles[x + y * WIDTH] = 1;
+				if (Math.round(Math.sqrt((xl * xl) + (yl * yl))) < size / 2) tiles[x + y * WIDTH] = 1;
 			}
 		}
 	}
