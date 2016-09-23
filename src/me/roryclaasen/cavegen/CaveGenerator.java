@@ -48,15 +48,17 @@ public class CaveGenerator {
 				if (value > -config.getCaveRange() && value < config.getCaveRange()) tiles[x + y * WIDTH] = 1;
 			}
 		}
-		for (int i = 0; i < config.getCavernLoop(); i++) {
-			boolean valid = false;
-			int x = 0, y = 0, size = config.getCavenSize();
-			while (!valid) {
-				x = random.nextInt(WIDTH);
-				y = random.nextInt(HEIGHT);
-				valid = tiles[x + y * WIDTH] == 1;
+		if (config.getCavenSize() > 0 && config.getCavernLoop() > 0) {
+			for (int i = 0; i < config.getCavernLoop(); i++) {
+				boolean valid = false;
+				int x = 0, y = 0, size = config.getCavenSize();
+				while (!valid) {
+					x = random.nextInt(WIDTH);
+					y = random.nextInt(HEIGHT);
+					valid = tiles[x + y * WIDTH] == 1;
+				}
+				placeCavern(x, y, (int) Math.ceil((size * 0.75) + random.nextInt(size)));
 			}
-			placeCavern(x, y, (int) Math.ceil((size * 0.75) + random.nextInt(size)));
 		}
 		if (config.doDebugOutput()) System.out.println("Done!");
 	}
