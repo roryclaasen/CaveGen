@@ -29,17 +29,21 @@ public class CaveGenerator {
 		generate(new CaveConfig());
 	}
 
-	public void generate(CaveConfig config) {
+	public void generate(CaveConfig config, int xOffset, int yOffset) {
 		if (config.doDebugOutput()) System.out.println("Creating level with seed: " + this.SEED);
 		noise = new OpenSimplexNoise(this.SEED);
 		if (config.doDebugOutput()) System.out.println("Setting tiles");
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				double value = noise.eval(x / config.getFeatureSize(), y / config.getFeatureSize());
+				double value = noise.eval((x + xOffset) / config.getFeatureSize(), (y + yOffset) / config.getFeatureSize());
 				if (value > -config.getCaveRange() && value < config.getCaveRange()) tiles[x + y * WIDTH] = 1;
 			}
 		}
 		if (config.doDebugOutput()) System.out.println("Done!");
+	}
+
+	public void generate(CaveConfig config) {
+		generate(config, 0, 0);
 	}
 
 	public int getWidth() {
